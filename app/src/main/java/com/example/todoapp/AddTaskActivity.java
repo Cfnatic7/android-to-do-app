@@ -1,7 +1,11 @@
 package com.example.todoapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -127,6 +132,7 @@ public class AddTaskActivity extends AppCompatActivity {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("task", newTask);
         setResult(RESULT_OK, resultIntent);
+        scheduleNotification(newTask);
         finish();
     }
 
@@ -140,6 +146,35 @@ public class AddTaskActivity extends AppCompatActivity {
             // You can use selectedImageUri to save the image in the database or display it in the UI
             // For now, let's just display the image URI in the log
             Log.d("AddTaskActivity", "Selected image URI: " + selectedImageUri.toString());
+        }
+    }
+
+    private void scheduleNotification(Task task) {
+        if (!task.isNotificationEnabled()) {
+            return;
+        }
+
+        Intent notificationIntent = new Intent(this, NotificationReceiver.class);
+        notificationIntent.putExtra("task", task);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        String dueDateString = task.getDueDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        Date dueDate = null;
+        try {
+            dueDate = dateFormat.parse(dueDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (dueDate != null) {
+            long triggerTime = dueDate.getTime();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+            }
         }
     }
 
