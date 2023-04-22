@@ -24,19 +24,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     public class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView taskTitle, taskDescription, taskDueDate;
+        TextView taskTitle, taskDescription, taskCreationTime, taskDueDate, taskStatus, taskNotification, taskCategory;
 
         public TaskViewHolder(View itemView) {
             super(itemView);
             taskTitle = itemView.findViewById(R.id.taskTitle);
             taskDescription = itemView.findViewById(R.id.taskDescription);
+            taskCreationTime = itemView.findViewById(R.id.taskCreationTime);
             taskDueDate = itemView.findViewById(R.id.taskDueDate);
+            taskStatus = itemView.findViewById(R.id.taskStatus);
+            taskNotification = itemView.findViewById(R.id.taskNotification);
+            taskCategory = itemView.findViewById(R.id.taskCategory);
         }
 
         public void bind(final Task task) {
             taskTitle.setText(task.getTitle());
             taskDescription.setText(task.getDescription());
+            taskCreationTime.setText(task.getCreationTime());
             taskDueDate.setText(task.getDueDate());
+            taskStatus.setText(task.isCompleted() ? "Completed" : "Not Completed");
+            taskNotification.setText(task.isNotificationEnabled() ? "Notification Enabled" : "Notification Disabled");
+            taskCategory.setText(task.getCategory());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -45,6 +53,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             });
         }
     }
+
 
     @NonNull
     @Override

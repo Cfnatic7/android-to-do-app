@@ -26,4 +26,32 @@
         android:text="Due Date"
         android:textSize="12sp" />
 
+    <TextView
+        android:id="@+id/taskCreationTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Creation Time"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/taskStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/taskNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/taskCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textSize="12sp" />
+
 </LinearLayout>
