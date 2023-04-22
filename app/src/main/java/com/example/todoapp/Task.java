@@ -1,4 +1,6 @@
 package com.example.todoapp;
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -65,5 +67,21 @@ public class Task implements Serializable {
 
     public boolean hasAttachments() {
         return attachments != null && !attachments.isEmpty();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", creationTime='" + creationTime + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", completed=" + completed +
+                ", notificationEnabled=" + notificationEnabled +
+                ", category='" + category + '\'' +
+                ", attachments=" + attachments +
+                '}';
     }
 }

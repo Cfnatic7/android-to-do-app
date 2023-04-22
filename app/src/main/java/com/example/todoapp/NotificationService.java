@@ -11,15 +11,21 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.google.gson.Gson;
+
 public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Task task = (Task) intent.getSerializableExtra("task");
-        System.out.println("on start command task title" + task.getTitle());
-        createNotification(task);
-        stopSelf();
+        if (intent != null) {
+            String taskJson = intent.getStringExtra("task");
+            Gson gson = new Gson();
+            Task task = gson.fromJson(taskJson, Task.class);
+
+            createNotification(task);
+        }
         return START_NOT_STICKY;
     }
+
 
     private void createNotification(Task task) {
         // Tworzenie kanału powiadomień

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -153,8 +155,11 @@ public class AddTaskActivity extends AppCompatActivity {
             return;
         }
 
+        Gson gson = new Gson();
+        String taskJson = gson.toJson(task);
+
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);
-        notificationIntent.putExtra("task", task);
+        notificationIntent.putExtra("task", taskJson);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
