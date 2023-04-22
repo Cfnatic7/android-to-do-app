@@ -55,10 +55,11 @@
         android:textSize="12sp" />
 
     <ImageView
-        android:id="@+id/attachmentIndicator"
+        android:id="@+id/attachment_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_attachment"
-        android:visibility="gone" />
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_baseline_attachment_24" />
+
 
 </LinearLayout>

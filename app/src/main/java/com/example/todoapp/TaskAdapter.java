@@ -38,7 +38,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskStatus = itemView.findViewById(R.id.taskStatus);
             taskNotification = itemView.findViewById(R.id.taskNotification);
             taskCategory = itemView.findViewById(R.id.taskCategory);
-            attachmentIndicator = itemView.findViewById(R.id.attachmentIndicator);
+            attachmentIndicator = itemView.findViewById(R.id.attachment_icon);
         }
 
         public void bind(final Task task) {
