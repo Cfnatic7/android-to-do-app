@@ -53,7 +53,6 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        System.out.println("on create add task activity");
 
         taskTitleEditText = findViewById(R.id.task_title);
         taskDescriptionEditText = findViewById(R.id.task_description);
@@ -170,11 +169,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         if (dueDate != null) {
             long triggerTime = dueDate.getTime();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-            } else {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-            }
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
         }
     }
 

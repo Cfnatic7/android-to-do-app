@@ -10,7 +10,9 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent serviceIntent = new Intent(context, NotificationService.class);
-        serviceIntent.putExtra("task", intent.getSerializableExtra("task"));
+        Task task = (Task) intent.getSerializableExtra("task");
+        System.out.println("on receive task title" + task.getTitle());
+        serviceIntent.putExtra("task", task);
         ContextCompat.startForegroundService(context, serviceIntent);
     }
 }

@@ -15,6 +15,7 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Task task = (Task) intent.getSerializableExtra("task");
+        System.out.println("on start command task title" + task.getTitle());
         createNotification(task);
         stopSelf();
         return START_NOT_STICKY;
