@@ -23,10 +23,16 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_TASK_REQUEST_CODE = 1;
 
     private List<Task> initData() {
-        // This list is just an example. Instead, load data from the device's database.
-        tasks.add(new Task(1, "Buy groceries", "Buy milk, eggs, and bread", "2023-04-22 10:00", "2023-04-25 12:00", false, true, "Shopping"));
-        tasks.add(new Task(2, "Finish project", "Finish the project by the end of the week", "2023-04-22 11:00", "2023-04-29 18:00", false, true, "Work"));
-        tasks.add(new Task(3, "Pay bills", "Pay the electricity and water bills", "2023-04-22 12:00", "2023-04-30 23:59", false, false, "Finance"));
+        List<Task> tasks = new ArrayList<>();
+        ArrayList<Integer> attachments1 = new ArrayList<>();
+        attachments1.add(R.drawable.rails);
+        tasks.add(new Task(1, "Buy groceries", "Buy milk, eggs, and bread", "2023-04-22 10:00", "2023-04-25 12:00", false, true, "Shopping", attachments1));
+
+        ArrayList<Integer> attachments2 = new ArrayList<>();
+        attachments2.add(R.drawable.tree);
+        tasks.add(new Task(2, "Finish project", "Finish the project by the end of the week", "2023-04-22 11:00", "2023-04-29 18:00", false, true, "Work", attachments2));
+
+        tasks.add(new Task(3, "Pay bills", "Pay the electricity and water bills", "2023-04-22 12:00", "2023-04-30 23:59", false, false, "Finance", null));
         return tasks;
     }
 

@@ -3,6 +3,7 @@ package com.example.todoapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView taskTitle, taskDescription, taskCreationTime, taskDueDate, taskStatus, taskNotification, taskCategory;
 
+        ImageView attachmentIndicator;
+
         public TaskViewHolder(View itemView) {
             super(itemView);
             taskTitle = itemView.findViewById(R.id.taskTitle);
@@ -35,6 +38,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskStatus = itemView.findViewById(R.id.taskStatus);
             taskNotification = itemView.findViewById(R.id.taskNotification);
             taskCategory = itemView.findViewById(R.id.taskCategory);
+            attachmentIndicator = itemView.findViewById(R.id.attachmentIndicator);
         }
 
         public void bind(final Task task) {
@@ -45,6 +49,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskStatus.setText(task.isCompleted() ? "Completed" : "Not Completed");
             taskNotification.setText(task.isNotificationEnabled() ? "Notification Enabled" : "Notification Disabled");
             taskCategory.setText(task.getCategory());
+            attachmentIndicator.setVisibility(task.hasAttachments() ? View.VISIBLE : View.GONE);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">To do app</string>
+    <string name="task_title">task title</string>
+    <string name="task_description">task description</string>
+    <string name="task_due_date">due date</string>
+    <string name="task_status">status</string>
+    <string name="task_notification">notification</string>
+    <string name="task_category">category</string>
+    <string name="add_attachment">add attachment</string>
+    <string name="save_task">save task</string>
 </resources>

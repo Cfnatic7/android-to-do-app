@@ -1,5 +1,6 @@
 package com.example.todoapp;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Task implements Serializable {
     private final int id;
@@ -11,8 +12,10 @@ public class Task implements Serializable {
     private final boolean notificationEnabled;
     private final String category;
 
+    private final ArrayList<Integer> attachments;
+
     public Task(int id, String title, String description, String creationTime, String dueDate,
-                boolean completed, boolean notificationEnabled, String category) {
+                boolean completed, boolean notificationEnabled, String category, ArrayList<Integer> attachments) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -21,6 +24,7 @@ public class Task implements Serializable {
         this.completed = completed;
         this.notificationEnabled = notificationEnabled;
         this.category = category;
+        this.attachments = attachments;
     }
 
     public int getId() {
@@ -53,5 +57,13 @@ public class Task implements Serializable {
 
     public String getCategory() {
         return category;
+    }
+
+    public ArrayList<Integer> getAttachments() {
+        return attachments;
+    }
+
+    public boolean hasAttachments() {
+        return attachments != null && !attachments.isEmpty();
     }
 }
