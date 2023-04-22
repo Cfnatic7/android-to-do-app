@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,12 +26,18 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private EditText taskTitleEditText;
     private EditText taskDescriptionEditText;
-    private EditText taskDueDateEditText;
+
+    private DatePicker taskDueDate;
+
+    private TimePicker taskDueTime;
+
     private CheckBox taskStatusCheckBox;
     private CheckBox taskNotificationCheckBox;
     private EditText taskCategoryEditText;
     private Button addAttachmentButton;
     private Button saveTaskButton;
+
+
 
     private static final int REQUEST_CODE_PICK_IMAGE = 1;
 
@@ -44,7 +52,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
         taskTitleEditText = findViewById(R.id.task_title);
         taskDescriptionEditText = findViewById(R.id.task_description);
-        taskDueDateEditText = findViewById(R.id.task_due_date);
+        taskDueDate = findViewById(R.id.task_due_date);
+        taskDueTime = findViewById(R.id.task_due_time);
         taskStatusCheckBox = findViewById(R.id.task_status);
         taskNotificationCheckBox = findViewById(R.id.task_notification);
         taskCategoryEditText = findViewById(R.id.task_category);
@@ -76,14 +85,30 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private void saveTask() {
         String title = taskTitleEditText.getText().toString().trim();
+        if (title.isEmpty()) {
+            Toast.makeText(this, "Please enter title", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String description = taskDescriptionEditText.getText().toString().trim();
-        String dueDate = taskDueDateEditText.getText().toString().trim();
+        int day = taskDueDate.getDayOfMonth();
+        int month = taskDueDate.getMonth() + 1;
+        int year = taskDueDate.getYear();
+
+        String dueDate = String.format(Locale.getDefault(), "%d-%02d-%02d", year, month, day);
+
+        taskDueTime = findViewById(R.id.task_due_time);
+        int hour = taskDueTime.getHour();
+        int minute = taskDueTime.getMinute();
+
+        String dueTime = String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
+
+        String dueDateTime = dueDate + " " + dueTime;
         boolean status = taskStatusCheckBox.isChecked();
         boolean notification = taskNotificationCheckBox.isChecked();
         String category = taskCategoryEditText.getText().toString().trim();
 
-        if (title.isEmpty()) {
-            Toast.makeText(this, "Please enter a title", Toast.LENGTH_SHORT).show();
+        if (category.isEmpty()) {
+            Toast.makeText(this, "Please enter category", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -94,7 +119,7 @@ public class AddTaskActivity extends AppCompatActivity {
         String creationTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
 
         // Create the new Task object with the input data and attachments
-        Task newTask = new Task(id, title, description, creationTime, dueDate, status, notification, category, attachments);
+        Task newTask = new Task(id, title, description, creationTime, dueDateTime, status, notification, category, attachments);
 
         // Save the new task in the database
 

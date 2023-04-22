@@ -23,12 +23,17 @@
             android:layout_height="wrap_content"
             android:hint="@string/task_description" />
 
-        <EditText
+        <DatePicker
             android:id="@+id/task_due_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TimePicker
+            android:id="@+id/task_due_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/task_due_date"
-            android:inputType="datetime" />
+            android:timePickerMode="spinner" />
+
 
         <CheckBox
             android:id="@+id/task_status"
