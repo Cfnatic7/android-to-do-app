@@ -40,6 +40,7 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        System.out.println("on create add task activity");
 
         taskTitleEditText = findViewById(R.id.task_title);
         taskDescriptionEditText = findViewById(R.id.task_description);

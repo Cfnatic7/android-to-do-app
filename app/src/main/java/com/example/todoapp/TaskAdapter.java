@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-    private final List<Task> tasks;
+    private List<Task> tasks;
     private final OnTaskClickListener onTaskClickListener;
 
     public TaskAdapter(List<Task> tasks, OnTaskClickListener onTaskClickListener) {
@@ -75,5 +75,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    public void updateTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
