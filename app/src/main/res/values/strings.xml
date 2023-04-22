@@ -8,4 +8,5 @@
     <string name="task_category">category</string>
     <string name="add_attachment">add attachment</string>
     <string name="save_task">save task</string>
+    <string name="filter_category">filter categories</string>
 </resources>
