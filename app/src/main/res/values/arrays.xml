@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="notification_time_entries">
-        <item>5 minut przed</item>
-        <item>10 minut przed</item>
-        <item>15 minut przed</item>
-        <item>30 minut przed</item>
-        <item>1 godzina przed</item>
+        <item>5 minutes before</item>
+        <item>10 minutes before</item>
+        <item>15 minutes before</item>
+        <item>30 minutes before</item>
+        <item>1 hour before</item>
     </string-array>
 
     <string-array name="notification_time_entry_values">

@@ -3,7 +3,7 @@
 
     <androidx.preference.ListPreference
         app:key="notification_time"
-        app:title="Czas wyświetlania powiadomienia"
+        app:title="notification display time"
         app:summary="%s"
         app:entries="@array/notification_time_entries"
         app:entryValues="@array/notification_time_entry_values"
