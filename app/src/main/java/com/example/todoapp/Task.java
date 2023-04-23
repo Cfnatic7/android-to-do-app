@@ -3,6 +3,7 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Task implements Serializable {
     private final int id;
@@ -14,10 +15,11 @@ public class Task implements Serializable {
     private final boolean notificationEnabled;
     private final String category;
 
-    private final ArrayList<Integer> attachments;
+    private List<String> attachments;
+
 
     public Task(int id, String title, String description, String creationTime, String dueDate,
-                boolean completed, boolean notificationEnabled, String category, ArrayList<Integer> attachments) {
+                boolean completed, boolean notificationEnabled, String category, ArrayList<String> attachments) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -61,7 +63,7 @@ public class Task implements Serializable {
         return category;
     }
 
-    public ArrayList<Integer> getAttachments() {
+    public List<String> getAttachments() {
         return attachments;
     }
 

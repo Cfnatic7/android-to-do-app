@@ -51,7 +51,7 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
     private static final int REQUEST_CODE_PICK_IMAGE = 1;
 
 
-    private ArrayList<Integer> attachments;
+    private ArrayList<String> attachments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

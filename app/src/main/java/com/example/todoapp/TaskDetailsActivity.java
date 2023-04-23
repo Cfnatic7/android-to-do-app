@@ -1,7 +1,11 @@
 package com.example.todoapp;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.Manifest;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class TaskDetailsActivity extends AppCompatActivity {
+
+    private static final int REQUEST_READ_EXTERNAL_STORAGE_PERMISSION = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +43,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
         AttachmentAdapter attachmentAdapter = new AttachmentAdapter(new ArrayList<>(task.getAttachments()), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(attachmentAdapter);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE_PERMISSION);
+        }
     }
 }

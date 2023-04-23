@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,11 @@ import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,14 +41,42 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_TASK_REQUEST_CODE = 1;
 
     private void initData() {
-        ArrayList<Integer> attachments1 = new ArrayList<>();
-        attachments1.add(R.drawable.rails);
+        String railsImagePath = copyImageToExternalStorage(R.drawable.rails, "rails.jpg");
+        ArrayList<String> attachments1 = new ArrayList<>();
+        attachments1.add(railsImagePath);
         tasks.add(new Task(1, "Buy groceries", "Buy milk, eggs, and bread", "2023-04-22 10:00", "2023-04-25 12:00", false, true, "Shopping", attachments1));
 
-        ArrayList<Integer> attachments2 = new ArrayList<>();
-        attachments2.add(R.drawable.tree);
+        String treeImagePath = copyImageToExternalStorage(R.drawable.tree, "tree.jpg");
+        ArrayList<String> attachments2 = new ArrayList<>();
+        attachments2.add(treeImagePath);
         tasks.add(new Task(2, "Finish project", "Finish the project by the end of the week", "2023-04-22 11:00", "2023-04-29 18:00", false, true, "Work", attachments2));
     }
+
+
+    private String copyImageToExternalStorage(int resourceId, String fileName) {
+        try {
+            InputStream inputStream = getResources().openRawResource(resourceId);
+            File outputDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File outputFile = new File(outputDir, fileName);
+            OutputStream outputStream = new FileOutputStream(outputFile);
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return getExternalFilesDir(Environment.DIRECTORY_PICTURES) + File.separator + fileName;
+    }
+
 
 
     private void initRecyclerView() {
