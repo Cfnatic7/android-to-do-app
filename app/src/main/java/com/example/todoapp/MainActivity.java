@@ -60,11 +60,9 @@ public class MainActivity extends AppCompatActivity {
         taskAdapter = new TaskAdapter(filteredTasks, new TaskAdapter.OnTaskClickListener() {
             @Override
             public void onTaskClick(Task task) {
-                // Handle task click, e.g., for editing or deleting
-                // You can also pass the information to another activity
-                // Intent intent = new Intent(MainActivity.this, EditTaskActivity.class);
-                // intent.putExtra("task", task);
-                // startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+                intent.putExtra("task", task);
+                startActivity(intent);
             }
         });
 
