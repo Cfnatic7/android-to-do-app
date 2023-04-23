@@ -13,53 +13,10 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/taskDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Task Description"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/taskDueDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Due Date"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/taskCreationTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Creation Time"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/taskStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Status"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/taskNotification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Notification"
-        android:textSize="12sp" />
-
-    <TextView
         android:id="@+id/taskCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Category"
         android:textSize="12sp" />
-
-    <ImageView
-        android:id="@+id/attachment_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_baseline_attachment_24" />
-
 
 </LinearLayout>
