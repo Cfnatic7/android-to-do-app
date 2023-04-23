@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
@@ -38,25 +39,25 @@ import java.util.Random;
 
 public class AddTaskActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private EditText taskTitleEditText;
-    private EditText taskDescriptionEditText;
+    protected EditText taskTitleEditText;
+    protected EditText taskDescriptionEditText;
 
-    private DatePicker taskDueDate;
+    protected DatePicker taskDueDate;
 
-    private TimePicker taskDueTime;
+    protected TimePicker taskDueTime;
 
-    private CheckBox taskStatusCheckBox;
-    private CheckBox taskNotificationCheckBox;
-    private EditText taskCategoryEditText;
-    private Button addAttachmentButton;
-    private Button saveTaskButton;
-
-
-
-    private static final int REQUEST_CODE_PICK_IMAGE = 1;
+    protected CheckBox taskStatusCheckBox;
+    protected CheckBox taskNotificationCheckBox;
+    protected EditText taskCategoryEditText;
+    protected Button addAttachmentButton;
+    protected Button saveTaskButton;
 
 
-    private ArrayList<String> attachments;
+
+    protected static final int REQUEST_CODE_PICK_IMAGE = 1;
+
+
+    protected ArrayList<String> attachments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,7 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
         }
     }
 
-    private void cancelNotification(Task task) {
+    void cancelNotification(Task task) {
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -124,12 +125,12 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
         saveTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveTask();
+                saveTask(null);
             }
         });
     }
 
-    private void saveTask() {
+    void saveTask(Integer taskId) {
         String title = taskTitleEditText.getText().toString().trim();
         if (title.isEmpty()) {
             Toast.makeText(this, "Please enter title", Toast.LENGTH_SHORT).show();
@@ -157,7 +158,11 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
             Toast.makeText(this, "Please enter category", Toast.LENGTH_SHORT).show();
             return;
         }
-        int id = new Random().nextInt(1000);
+        int id;
+        if (taskId == null) {
+            id = new Random().nextInt(1000);
+        }
+        else id = taskId;
         String creationTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
         Task newTask = new Task(id, title, description, creationTime, dueDateTime, status, notification, category, attachments);
 

@@ -65,5 +65,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
+        <Button
+            android:id="@+id/edit_task_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Edytuj zadanie"
+            android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
 </ScrollView>
