@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TaskAdapter taskAdapter;
 
-    private List<Task> tasks;
+    public static List<Task> tasks;
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
 

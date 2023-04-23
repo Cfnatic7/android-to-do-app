@@ -4,9 +4,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-public class AddTaskActivity extends AppCompatActivity {
+public class AddTaskActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private EditText taskTitleEditText;
     private EditText taskDescriptionEditText;
@@ -67,8 +69,47 @@ public class AddTaskActivity extends AppCompatActivity {
         saveTaskButton = findViewById(R.id.save_task_button);
 
         attachments = new ArrayList<>();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
         initButtons();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("notification_time")) {
+
+            // Tutaj możesz zaktualizować powiadomienie dla wszystkich istniejących zadań
+            // używając nowej wartości notificationMinutesBefore, np. przez
+            // przeprogramowanie alarmów w AlarmManager.
+
+            // Na przykład:
+             for (Task task : MainActivity.tasks) {
+                 updateNotification(task);
+             }
+        }
+    }
+
+    private void cancelNotification(Task task) {
+        Intent notificationIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+    }
+
+    private void updateNotification(Task task) {
+        cancelNotification(task);
+
+        scheduleNotification(task);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private void initButtons() {
@@ -173,7 +214,10 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         if (dueDate != null) {
-            long triggerTime = dueDate.getTime();
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            int notificationMinutesBefore = Integer.parseInt(sharedPreferences.getString("notification_time", "15"));
+            long triggerTime = dueDate.getTime() - ((long) notificationMinutesBefore * 60 * 1000);
+
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
         }
     }

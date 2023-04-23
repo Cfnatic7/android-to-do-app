@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        app:key="notification_time"
+        app:title="Czas wyświetlania powiadomienia"
+        app:summary="%s"
+        app:entries="@array/notification_time_entries"
+        app:entryValues="@array/notification_time_entry_values"
+        app:defaultValue="15" />
+
+</PreferenceScreen>
