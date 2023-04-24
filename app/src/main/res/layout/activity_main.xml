@@ -38,7 +38,7 @@
         android:id="@+id/settings_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ustawienia"
+        android:text="Settings"
         app:layout_constraintTop_toTopOf="@+id/fab_add_task"
         app:layout_constraintBottom_toBottomOf="@+id/fab_add_task"
         app:layout_constraintEnd_toStartOf="@+id/fab_add_task" />

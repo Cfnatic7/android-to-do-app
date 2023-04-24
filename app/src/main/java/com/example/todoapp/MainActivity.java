@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         initFab();
         initSettingsButton();
         searchView = findViewById(R.id.search_view);
+        initSearchView();
 
     }
 
