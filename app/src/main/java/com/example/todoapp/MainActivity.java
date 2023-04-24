@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 filteredTasks.add(task);
             }
         }
+        filteredTasks = sortTasksByDueDate(filteredTasks);
 
         taskAdapter = new TaskAdapter(filteredTasks, new TaskAdapter.OnTaskClickListener() {
             @Override
@@ -223,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 filteredTasks.add(task);
             }
         }
+        filteredTasks = sortTasksByDueDate(filteredTasks);
 
         taskAdapter.updateTasks(filteredTasks);
     }
@@ -232,6 +236,24 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
+    }
+
+    public static List<Task> sortTasksByDueDate(List<Task> tasks) {
+        tasks.sort(new Comparator<Task>() {
+            @Override
+            public int compare(Task task1, Task task2) {
+                if (task1.getDueDate() == null && task2.getDueDate() == null) {
+                    return 0;
+                } else if (task1.getDueDate() == null) {
+                    return 1;
+                } else if (task2.getDueDate() == null) {
+                    return -1;
+                } else {
+                    return task1.getDueDate().compareTo(task2.getDueDate());
+                }
+            }
+        });
+        return tasks;
     }
 
 

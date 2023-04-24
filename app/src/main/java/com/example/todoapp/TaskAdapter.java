@@ -64,7 +64,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     public void updateTasks(List<Task> tasks) {
-        this.tasks = tasks;
+        this.tasks = MainActivity.sortTasksByDueDate(tasks);
         this.notifyDataSetChanged();
     }
 }
