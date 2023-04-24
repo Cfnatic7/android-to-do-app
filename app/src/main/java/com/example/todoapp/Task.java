@@ -6,32 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Task implements Serializable {
-    private final int id;
-    private final String title;
-    private final String description;
-    private final String creationTime;
-    private final String dueDate;
-    private final boolean completed;
-    private final boolean notificationEnabled;
-    private final String category;
 
-    private List<String> attachments;
-
-
-    public Task(int id, String title, String description, String creationTime, String dueDate,
-                boolean completed, boolean notificationEnabled, String category, ArrayList<String> attachments) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.creationTime = creationTime;
-        this.dueDate = dueDate;
-        this.completed = completed;
-        this.notificationEnabled = notificationEnabled;
-        this.category = category;
-        this.attachments = attachments;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -67,9 +43,71 @@ public class Task implements Serializable {
         return attachments;
     }
 
-    public boolean hasAttachments() {
-        return attachments != null && !attachments.isEmpty();
+    public void setAttachments(List<String> attachments) {
+        this.attachments = attachments;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCreationTime(String creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public void setNotificationEnabled(boolean notificationEnabled) {
+        this.notificationEnabled = notificationEnabled;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    private Long id;
+    private String title;
+    private String description;
+    private String creationTime;
+    private String dueDate;
+    private boolean completed;
+    private boolean notificationEnabled;
+    private String category;
+
+    private List<String> attachments;
+
+
+    public Task(Long id, String title, String description, String creationTime, String dueDate,
+                boolean completed, boolean notificationEnabled, String category, ArrayList<String> attachments) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.creationTime = creationTime;
+        this.dueDate = dueDate;
+        this.completed = completed;
+        this.notificationEnabled = notificationEnabled;
+        this.category = category;
+        this.attachments = attachments;
+    }
+
+    public Task() {
+
+    }
+
 
     @NonNull
     @Override

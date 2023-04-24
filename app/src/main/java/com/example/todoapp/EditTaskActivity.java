@@ -29,9 +29,10 @@ public class EditTaskActivity extends AddTaskActivity {
     }
 
     @Override
-    protected void saveTask(Integer taskId) {
+    protected void saveTask(Long id) {
         cancelNotification(taskToEdit);
-        super.saveTask(taskToEdit.getId());
+        System.out.println("Saving task in edition: " + taskToEdit.toString());
+        super.saveTask( taskToEdit.getId());
         Intent resultIntent = new Intent();
         resultIntent.putExtra("task", taskToEdit);
         setResult(RESULT_OK, resultIntent);

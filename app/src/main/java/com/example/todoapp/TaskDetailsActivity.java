@@ -125,14 +125,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         AttachmentAdapter attachmentAdapter = new AttachmentAdapter(new ArrayList<>(task.getAttachments()), this);
         recyclerView.setAdapter(attachmentAdapter);
         System.out.println(task.toString());
-        for (int i = 0; i < MainActivity.tasks.size(); i++) {
-            System.out.println("w pętli");
-            System.out.println(MainActivity.tasks.get(i).toString());
-            if (MainActivity.tasks.get(i).getId() == task.getId()) {
-                MainActivity.tasks.set(i, task);
-                break;
-            }
-        }
 
     }
 }

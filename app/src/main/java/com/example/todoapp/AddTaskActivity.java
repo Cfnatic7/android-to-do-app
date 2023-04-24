@@ -52,6 +52,8 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
     protected Button addAttachmentButton;
     protected Button saveTaskButton;
 
+    protected Long savedTaskId;
+
 
 
     protected static final int REQUEST_CODE_PICK_IMAGE = 1;
@@ -92,7 +94,7 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
 
     void cancelNotification(Task task) {
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
@@ -130,7 +132,7 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
         });
     }
 
-    void saveTask(Integer taskId) {
+    void saveTask(Long taskId) {
         String title = taskTitleEditText.getText().toString().trim();
         if (title.isEmpty()) {
             Toast.makeText(this, "Please enter title", Toast.LENGTH_SHORT).show();
@@ -158,18 +160,20 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
             Toast.makeText(this, "Please enter category", Toast.LENGTH_SHORT).show();
             return;
         }
-        int id;
-        if (taskId == null) {
-            id = new Random().nextInt(1000);
-        }
-        else id = taskId;
         String creationTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-        Task newTask = new Task(id, title, description, creationTime, dueDateTime, status, notification, category, attachments);
+        Task newTask = new Task(null, title, description, creationTime, dueDateTime, status, notification, category, attachments);
 
+        if (taskId != null) {
+            savedTaskId = taskId;
+            newTask.setId(taskId);
+            MainActivity.taskDbHelper.updateTask(newTask);
+        }
+        else savedTaskId = MainActivity.taskDbHelper.addTask(newTask);
+        newTask.setId(savedTaskId);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("task", newTask);
         setResult(RESULT_OK, resultIntent);
-        scheduleNotification(newTask);
+        scheduleNotification(MainActivity.taskDbHelper.getTask(savedTaskId));
         finish();
     }
 
@@ -183,6 +187,9 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
 
             if (attachmentPath != null) {
                 attachments.add(attachmentPath);
+                Task task = MainActivity.taskDbHelper.getTask(savedTaskId);
+                task.setAttachments(attachments);
+                MainActivity.taskDbHelper.updateTask(task);
                 Log.d("AddTaskActivity", "Saved image to external storage: " + attachmentPath);
             } else {
                 Log.e("AddTaskActivity", "Failed to save image to external storage");
@@ -224,7 +231,7 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
 
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);
         notificationIntent.putExtra("task", taskJson);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         String dueDateString = task.getDueDate();

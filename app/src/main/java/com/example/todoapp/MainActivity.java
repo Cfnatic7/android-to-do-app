@@ -45,17 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SearchView searchView;
 
-    private void initData() {
-        String railsImagePath = copyImageToExternalStorage(R.drawable.rails, "rails.jpg");
-        ArrayList<String> attachments1 = new ArrayList<>();
-        attachments1.add(railsImagePath);
-        tasks.add(new Task(1, "Buy groceries", "Buy milk, eggs, and bread", "2023-04-22 10:00", "2023-04-25 12:00", false, true, "Shopping", attachments1));
-
-        String treeImagePath = copyImageToExternalStorage(R.drawable.tree, "tree.jpg");
-        ArrayList<String> attachments2 = new ArrayList<>();
-        attachments2.add(treeImagePath);
-        tasks.add(new Task(2, "Finish project", "Finish the project by the end of the week", "2023-04-22 11:00", "2023-04-29 18:00", false, true, "Work", attachments2));
-    }
+    public static TaskDbHelper taskDbHelper;
 
 
     private String copyImageToExternalStorage(int resourceId, String fileName) {
@@ -85,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initRecyclerView() {
+        tasks = taskDbHelper.getAllTasks();
 
         SharedPreferences sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
         boolean hideCompletedTasks = sharedPreferences.getBoolean("hide_completed_tasks", false);
@@ -113,10 +104,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        taskDbHelper = new TaskDbHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tasks = new ArrayList<>();
-        initData();
 
         initRecyclerView();
         initFab();
@@ -173,17 +164,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            Task newTask = (Task) data.getSerializableExtra("task");
-            if (newTask != null) {
-                addTaskToList(newTask);
-            }
-        }
+//        if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+//            Task newTask = (Task) data.getSerializableExtra("task");
+//            if (newTask != null) {
+//                addTaskToList(newTask);
+//            }
+//        }
     }
 
     private void addTaskToList(Task newTask) {
-        tasks.add(newTask);
-        taskAdapter.updateTasks(tasks);
+        taskDbHelper.addTask(newTask);
+        taskAdapter.updateTasks(taskDbHelper.getAllTasks());
     }
 
     private void initSettingsButton() {
@@ -269,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cancelNotification(Task task) {
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
