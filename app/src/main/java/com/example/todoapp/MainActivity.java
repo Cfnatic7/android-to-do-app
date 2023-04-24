@@ -95,6 +95,35 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("task", task);
                 startActivity(intent);
             }
+
+            @Override
+            public void onTaskLongClick(Task task) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Do you want to delete this task?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                List<String> attachments = taskDbHelper.getAttachments(task.getId());
+                                for (String attachmentPath : attachments) {
+                                    File attachmentFile = new File(attachmentPath);
+                                    if (attachmentFile.exists()) {
+                                        System.out.println("deleted attachment file");
+                                        attachmentFile.delete();
+                                    }
+                                }
+
+                                taskDbHelper.deleteTask(task.getId());
+                                MainActivity.tasks.remove(task);
+                                taskAdapter.updateTasks(taskDbHelper.getAllTasks());
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.create().show();
+            }
+
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);

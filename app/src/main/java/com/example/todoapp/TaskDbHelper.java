@@ -183,6 +183,25 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<String> getAttachments(long taskId) {
+        List<String> attachments = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_TASKS, new String[]{TaskDbHelper.attachments},
+                COLUMN_ID + "=?", new String[]{String.valueOf(taskId)},
+                null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            @SuppressLint("Range") String attachmentsJson = cursor.getString(cursor.getColumnIndex(TaskDbHelper.attachments));
+            Type listType = new TypeToken<ArrayList<String>>(){}.getType();
+            attachments = new Gson().fromJson(attachmentsJson, listType);
+            cursor.close();
+        }
+        db.close();
+        return attachments;
+    }
+
+
     // Metoda pobierająca listę wszystkich zadań z bazy danych
     @SuppressLint("Range")
     public List<Task> getAllTasks() {

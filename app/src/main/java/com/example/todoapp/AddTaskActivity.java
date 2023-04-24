@@ -187,9 +187,6 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
 
             if (attachmentPath != null) {
                 attachments.add(attachmentPath);
-                Task task = MainActivity.taskDbHelper.getTask(savedTaskId);
-                task.setAttachments(attachments);
-                MainActivity.taskDbHelper.updateTask(task);
                 Log.d("AddTaskActivity", "Saved image to external storage: " + attachmentPath);
             } else {
                 Log.e("AddTaskActivity", "Failed to save image to external storage");
