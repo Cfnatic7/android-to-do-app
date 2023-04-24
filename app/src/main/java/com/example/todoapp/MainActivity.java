@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     public static List<Task> tasks;
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
+
+    private SearchView searchView;
 
     private void initData() {
         String railsImagePath = copyImageToExternalStorage(R.drawable.rails, "rails.jpg");
@@ -118,7 +121,39 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         initFab();
         initSettingsButton();
+        searchView = findViewById(R.id.search_view);
 
+    }
+
+    private void initSearchView() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchTasks(newText);
+                return true;
+            }
+        });
+    }
+
+    private void searchTasks(String query) {
+        List<Task> filteredTasks;
+        if (query.isEmpty()) {
+            filteredTasks = new ArrayList<>(tasks);
+        } else {
+            filteredTasks = new ArrayList<>();
+            for (Task task : tasks) {
+                if (task.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    filteredTasks.add(task);
+                }
+            }
+        }
+
+        taskAdapter.updateTasks(filteredTasks);
     }
 
     private void initFab() {
