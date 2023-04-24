@@ -13,15 +13,8 @@
         android:layout_margin="8dp"
         app:layout_constraintEnd_toStartOf="@+id/settings_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/settings_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        app:layout_constraintBaseline_toBaselineOf="@+id/search_view"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -40,5 +33,14 @@
         app:backgroundTint="@color/design_default_color_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ustawienia"
+        app:layout_constraintTop_toTopOf="@+id/fab_add_task"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_add_task"
+        app:layout_constraintEnd_toStartOf="@+id/fab_add_task" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
