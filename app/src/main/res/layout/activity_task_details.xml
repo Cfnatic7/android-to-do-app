@@ -70,8 +70,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Edytuj zadanie"
+            android:text="Edit Task"
             android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go back" />
 
     </LinearLayout>
 </ScrollView>

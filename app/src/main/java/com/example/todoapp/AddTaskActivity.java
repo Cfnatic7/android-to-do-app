@@ -130,6 +130,14 @@ public class AddTaskActivity extends AppCompatActivity implements SharedPreferen
                 saveTask(null);
             }
         });
+
+        Button btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     void saveTask(Long taskId) {

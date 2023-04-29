@@ -82,6 +82,14 @@ public class TaskDetailsActivity extends AppCompatActivity {
             }
         });
 
+        Button btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
 
